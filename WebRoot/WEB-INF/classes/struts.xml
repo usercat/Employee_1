@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+<package name="ssh" extends="struts-default" namespace="/">
+<!-- 注册拦截器 -->
+<interceptors>
+<interceptor name="auth" class="com.muke.employee.interceptor.TimerInterceptor"></interceptor>
+<!-- 自定义拦截器栈 -->
+<interceptor-stack name="myStack">
+<interceptor-ref name="defaultStack"></interceptor-ref>
+<interceptor-ref name="auth"></interceptor-ref>
+</interceptor-stack>
+</interceptors>
+<action name="employee_*" class="EmployeeAction" method="{1}">
+
+<result name="login">/index.jsp</result>
+<result name="input">/index.jsp</result>
+<result name="success" type="redirect">/frame.jsp</result>
+<result name="findAll">/jsp/employee/listEmployee.jsp</result>
+<result name="saveUi">/jsp/employee/addEmployee.jsp</result>
+<result name="saveSuccess">/jsp/employee/listEmployee.jsp</result>
+<result name="editSuccess">/jsp/employee/edit.jsp</result>
+<result name="updateSuccess" type="redirectAction">employee_findAll.action</result>
+<result name="deleteSuc">/jsp/employee/listEmployee.jsp</result>
+<interceptor-ref name="myStack"></interceptor-ref>
+</action>
+<action name="department_*" class="DepartmentAction" method="{1}">
+<result name="findAll" >/jsp/department/list.jsp</result>
+<result name="saveui" >add.jsp</result>
+<result name="saveSuccess" type="redirectAction">department_findAll.action</result>
+<result name="editSuccess" >/jsp/department/edit.jsp</result>
+<result name="updateSuccess" type="redirectAction">department_findAll.action</result>
+<result name="deleteSuccess" type="redirectAction">department_findAll.action</result>
+</action>
+</package>
+</struts>    
+ 
